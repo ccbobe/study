@@ -24,7 +24,7 @@ public class Customer {
     private RabbitTemplate rabbitTemplate;
 
     @RabbitListener(bindings={
-            @QueueBinding(value = @Queue("demo"),exchange = @Exchange("amq.direct"),
+            @QueueBinding(value = @Queue("demo"),exchange = @Exchange(value = "amq.direct",durable ="true" ),
             key = "demo.master")})
     public void simpleRecever(Order recever){
         logger.info("demo.master接受消息信息{}",JSON.toJSONString(recever));
@@ -32,7 +32,7 @@ public class Customer {
     }
 
     @RabbitListener(bindings={
-            @QueueBinding(value = @Queue("demo"),exchange = @Exchange("amq.direct"),
+            @QueueBinding(value = @Queue("demo"),exchange = @Exchange(value = "amq.direct",durable ="true"),
                     key = "demo.bak")})
     public void simpleReceverByKeyBak(Order recever){
         logger.info("demo.bak接受消息信息{}",JSON.toJSONString(recever));
