@@ -6,11 +6,14 @@ import com.ccbobe.study.message.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.concurrent.ArrayBlockingQueue;
 
 @RestController
 @RequestMapping(value = "/msgs/")
@@ -20,6 +23,9 @@ public class MsgController {
 
     @Autowired
     private RabbitTemplate template;
+    
+   
+   
 
 
     @RequestMapping("sends")
@@ -37,4 +43,12 @@ public class MsgController {
         template.convertAndSend("amq.direct","demo.bak",order);
         return order;
     }
+	
+	@RequestMapping("sendMsgToFanout")
+	public Order sendMsgToFanout(@RequestBody Order order) {
+		//简单消息发送信息
+		logger.info("发送消息信息{}",JSON.toJSONString(order));
+		template.convertAndSend("amq.fanout","demo.*",order);
+		return order;
+	}
 }
