@@ -235,7 +235,40 @@ jstat -class pid
 
 <img src="./image/jvm内存模型.png"></img>
 
-内存划分(jdk1.7 内存模型) 在jdk1.8 中Perm  被metaspace 所取代
+**内存划分(jdk1.7 内存模型)**
+
+ 在jdk1.8 中Perm  被metaspace 所取代
 
 <img src=".\image\内存划分.png"></img>
 
+**G1垃圾回收算法**
+
+GarBage First 简称G1
+
+目标是要求减少GC 所导致的应用暂停的时间，让应用达到准时的效果。同时保证JVMd
+
+堆空间大的利用率。，最大最大的特色在于永许在制定的时间内GC所导致的GC所导致的
+
+应用暂停的时间为1秒。这个特性对于准时保证系统响应时间的系统非常具有吸引力。
+
+G1 要求 一方面是硬件环境达到这样的要求，必须是多核较大内存（规范上讲512M）
+
+就达到了要求。另一方面是接受吞吐量稍微的降低。对于实时性要求较高的系统而言。
+
+这点是可以接受的。
+
+G1  吸收了原有GC以及CMS的精髓。将整个jvm Heap 分成 几个固定大小的region
+
+扫描时采用Snapshot-at-the-beginning的并发marking算法（具体在后面内容详细解释）对整个heap中的region进行mark，回收时根据region中活跃对象的bytes进行排序，首先回收活跃对象bytes小以及回收耗时短（预估出来的时间）的region，回收的方法为将此region中的活跃对象复制到另外的region中，根据指定的GC所能占用的时间来估算能回收多少region，这点和以前版本的Full GC时得处理整个heap非常不同，这样就做到了能够尽量短时间的暂停应用，又能回收内存，由于这种策略在回收时首先回收的是垃圾对象所占空间最多的region，因此称为Garbage First。
+
+ **Tomcat内存调优**
+ Tomcat内存参数信息
+ 1 -server 一定要作为第一个参数，在多核CPU下性能最佳
+ 2 -Xms Java heap 初始大小，默认是物理内存的1/64  
+ 3 -Xmx java heap最大值。建议均设为物理内存的一半。不可超过物理内存。
+ 4 -XX:PermSize：设定内存的永久保存区初始大小。缺省值为64M。(1.7)
+ 5 -XX:MaxPermSize：设定内存的永久保存区最大 大小。缺省值为64M。
+ 6 -Xmn：young generation(年轻代)的heap大小。一般设置为Xmx的3、4分之一
+ 
+ 新建 setenv.sh   执行脚本并且设置
+ export JAVA_OPTS=" -server -Xms4g -Xmx4g -Xmn1g"

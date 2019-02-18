@@ -1,6 +1,7 @@
 package com.ccbobe.study.producer;
 
 
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import com.alibaba.fastjson.JSON;
 import com.ccbobe.study.message.Order;
 import com.ccbobe.study.message.Shop;
@@ -96,5 +97,7 @@ public class MsgController {
 
         return shop;
     }
+
+
 	
 }
