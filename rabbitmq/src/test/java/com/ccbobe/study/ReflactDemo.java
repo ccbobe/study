@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class ReflactDemo {
     
@@ -76,6 +78,32 @@ public class ReflactDemo {
         user.user(string);
     
     
+    }
+    
+    @Test
+    public void testConsumner(){
+        //测试消费型接口
+        strTrim("hello",(x)-> System.out.println("购物消息"+ x +"*"));
+        
+       Supplier<User> supplier = User::new;
+    
+        User user = supplier.get();
+        
+        user.setAge(20);
+    
+        User user1 = supplier.get();
+    
+        System.out.println(JSON.toJSONString(user));
+    
+        System.out.println(JSON.toJSONString(user1));
+    }
+    
+    public void strTrim(String str, Consumer<String> consumer){
+        consumer.accept(str.toUpperCase().trim());
+    }
+    
+    public String strGet( Supplier<String> supplier){
+        return supplier.get();
     }
     
 }

@@ -13,3 +13,5 @@ Class类：代表类，每个类和接口都有一个与之关联的Class对象�
 
 （3）通过Class类的getDeclaredMethods()方法得到一个包含某些Method对象的数组，这些Method对象就是Class对象所对应的类或接口的所有方法
 （包括private方法、继承的父类中的方法、不包括构造方法）
+
+
