@@ -6,6 +6,8 @@ import org.junit.Test;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -104,6 +106,12 @@ public class ReflactDemo {
     
     public String strGet( Supplier<String> supplier){
         return supplier.get();
+    }
+    
+    
+    @Test
+    public void testHashMap(){
+        Map map = new HashMap(16);
     }
     
 }
