@@ -205,7 +205,223 @@ key 分区 类似hash 分区。
 
 
 
+数据库设计规范
+
+数据库设计三范式
+
+确保每列的原子性，如果每列（或者每个属性）都是不可再分的最小单元（成为原子单元）  ，则满足第一范式。
 
 
+第二范式：如果一个关系满足第一范式。并且除了主键以为的其他列。都依赖于该主键，则满足第二范式。
+
+第三范式：如果一个关系满足第二范式，并且除了主键以为的其他列都不依赖于主键，则满足第三范式。
+
+表设计：
+1.库名 ，表名，字段名必须小写，“_” 分割，且长度不超过12 个字符并且做到见名知意。
+2.建议采用innoDB 存储引擎。
+3.存储精确浮点数必须采用decimal 代替float和double.
+4.建议采用 unsigned 储存非负值。
+5.建议用int unsingined 存储Ipv4.
+6.不建议采用enum 类型   使用tinyint 来代替。
+7.int   定义建议不用加长度。
+8.尽量不使用 text, blob 类型。
+9.VARCHAR(N)，N尽可能小，因为MySQL一个表中所有的VARCHAR字段最大长度是65535个字节，
+进行排序和创建临时表一类的内存操作时，会使用N的长度申请内存。
+10VARCHAR(N)，N表示的是字符数不是字节数，比如VARCHAR(255)，可以最大可存储255个汉字，
+需要根据实际的宽度来选择N。
+11.表字符集选择UTF8。
+
+12.使用VARBINARY存储变长字符串。
+13.存储年使用YEAR类型，存储日期使用DATE类型，存储时间（精确到秒）建议使用TIMESTAMP类型，
+因为TIMESTAMP使用4字节，DATETIME使用8个字节。
+14.建议字段定义为NOT NULL。
+15.将过大字段拆分到其他表中。
+16.禁止在数据库中使用VARBINARY、BLOB存储图片、文件等。
+
+索引
+索引名称必须使用小写，非唯一索引必须按照“idx_字段名称_字段名称[_字段名]”进行命名，唯一索引必须按照“uniq_字段名称_字段名称[_字段名]”进行命名。
+
+索引中的字段数建议不超过5个。
+
+单张表的索引数量控制在5个以内。
+
+唯一键由3个以下字段组成，并且字段都是整形时，使用唯一键作为主键。
+
+没有唯一键或者唯一键不符合4中的条件时，使用自增（或者通过发号器获取）id作为主键。
+
+唯一键不和主键重复。
+
+索引字段的顺序需要考虑字段值去重之后的个数，个数多的放在前面。
+
+ORDER BY，GROUP BY，DISTINCT的字段需要添加在索引的后面。
+
+使用EXPLAIN判断SQL语句是否合理使用索引，尽量避免extra列出现：Using File Sort，UsingTemporary。
+
+UPDATE、DELETE语句需要根据WHERE条件添加索引。
+
+不建议使用%前缀模糊查询，例如LIKE “%weibo”。
+
+对长度过长的VARCHAR字段建立索引时，添加crc32或者MD5 Hash字段，对Hash字段建立索引。
+
+合理创建联合索引（避免冗余），(a,b,c)相当于 (a) 、(a,b) 、(a,b,c)。
+
+合理利用覆盖索引。
+
+SQL变更需要确认索引是否需要变更并通知DBA。
+
+SQL语句
+
+SQL语句中IN包含的值不应过多。
+
+UPDATE、DELETE语句不使用LIMIT。
+
+WHERE条件中必须使用合适的类型，避免MySQL进行隐式类型转化。
+
+SELECT语句只获取需要的字段。
+
+SELECT、INSERT语句必须显式的指明字段名称，不使用SELECT *，不使用INSERTINTO table。
+
+使用SELECT column_name1, column_name2 FROM table WHERE[condition]而不是SELECT column_name1 FROM table WHERE[condition]和SELECT column_name2 FROM table WHERE [condition]。
+
+WHERE条件中的非等值条件（IN、BETWEEN、<、<=、>、>=）会导致后面的条件使用不了索引。
+
+避免在SQL语句进行数学运算或者函数运算，容易将业务逻辑和DB耦合在一起。
+
+INSERT语句使用batch提交（INSERT INTO tableVALUES,,……），values的个数不应过多。
+
+避免使用存储过程、触发器、函数等，容易将业务逻辑和DB耦合在一起，并且MySQL的存储过程、触发器、函数中存在一定的bug。
+
+避免使用JOIN。
+
+使用合理的SQL语句减少与数据库的交互次数。
+
+不使用ORDER BY RAND，使用其他方法替换。
+
+建议使用合理的分页方式以提高分页的效率。
+
+统计表中记录数时使用COUNT(*)，而不是COUNT(primary_key)和COUNT(1)。
+
+禁止在从库上执行后台管理和统计类型功能的QUERY。
 
 
+散表
+
+每张表数据量建议控制在5000w以下。
+
+可以结合使用hash、range、lookup table进行散表。
+
+散表如果使用md5（或者类似的hash算法）进行散表，表名后缀使用16进制，比如user_ff。
+
+推荐使用CRC32求余（或者类似的算术算法）进行散表，表名后缀使用数字，数字必须从0开始并等宽，比如散100张表，后缀从00-99。
+
+使用时间散表，表名后缀必须使用特定格式，比如按日散表user_20110209、按月散表user_201102。
+
+三、表设计规范
+
+1）    用DECIMAL代替FLOAT和DOUBLE存储精确浮点数（精确数据）
+2）    使用TINYINT代替ENUM类型（便于迁移时兼容）
+3）    尽可能不使用TEXT、BLOB类型（该数据类型不能设置默认值、不便于排序、不便于建立索引）
+4）    同一意义的字段设计定义必须相同（便于联表查询）
+5）    所有字段均定义为NOT NULL（避免使用NULL字段，NULL字段很难查询优化，NULL字段的索引需要额外空间，NULL字段的复合索引无效）
+6）    表必须有主键，不使用更新频繁的列做主键、尽量不使用字符串列做主键，尽量使用非空的唯一自增键做主键
+
+四、索引设计规范
+1）    单表索引数量不超过10个
+2）    单个字段不要超过两个索引
+3）    新建的唯一索引必须不能和主键重复
+4）    避免冗余和重复索引
+5）    尽量不要在频繁更新的列上建立索引
+6）    不在低基数列上建立索引，例如状态、类型等
+7）    不在索引列进行数学运算和函数运算（参与了运算的列不会引用索引）
+8）    复合索引须符合最左前缀的特点建立索引（mysql使用复合索引时从左向右匹配）
+9）    重要的SQL中where条件里的字段必须被索引
+10）    Where条件里的字段顺序与索引顺序无关，优化器会自动调整
+11）    索引选择性= Cardinality / Total Rows，即基数 ÷ 数据行数，值越接近1说明使用索引的过滤效果越好
+12）    建立索引时，务必先explain，查看索引使用情况
+
+
+mysql  性能查询信息
+show global status; 查询各种状态值，
+
+查询mysql系统配置信息
+show variables; 
+
+ 慢查询
+ show variables like '%show%'
+ 
+ 查询连接数 
+ show variables like 'max_connections';
+ 
+ show global status like 'Max_used_connections'
+ 比较理想的设置为： Max_used_connections / max_connections 约定于 85%
+ 
+ 查询缓存情况信息
+  show global status like 'qcache%'; 
+  　  Qcache_free_blocks：缓存中相邻内存块的个数。数目大说明可能有碎片。
+                         FLUSH QUERY CACHE会对缓存中的碎片进行整理，从而得到一个空闲块。
+  　　Qcache_free_memory：缓存中的空闲内存。 
+  　　Qcache_hits：每次查询在缓存中命中时就增大
+  　　Qcache_inserts：每次插入一个查询时就增大。命中次数除以插入次数就是不中比率。
+  　　Qcache_lowmem_prunes：缓存出现内存不足并且必须要进行清理以便为更多查询提供空间的次数。
+                          这个数字最好长时间来看;如果这个数字在不断增长，就表示可能碎片非常严重，或者内存很少。(上面的 free_blocks和free_memory可以告诉您属于哪种情况) 
+  　　Qcache_not_cached：不适合进行缓存的查询的数量，通常是由于这些查询不是 
+                         SELECT 语句或者用了now()之类的函数。
+  　　Qcache_queries_in_cache：当前缓存的查询(和响应)的数量。
+  　　Qcache_total_blocks：缓存中块的数量。
+  
+ 
+文件打开数(open_files) 
+ show global status like 'open_files'; 
+ 理想设置参数
+Open_files / open_files_limit * 100% <= 75%
+
+数据库信息查询QPS：
+
+  QPS，Queries Per Second：每秒查询数，一台数据库每秒能够处理的查询次数
+
+  TPS，Transactions Per Second：每秒处理事务数
+  
+    通过show status查看运行状态，会有300多条状态信息记录，其中有几个值帮可以我们计算出QPS和TPS，如下：
+  
+    Uptime：服务器已经运行的实际，单位秒
+  
+    Questions：已经发送给数据库查询数
+  
+    Com_select：查询次数，实际操作数据库的
+  
+    Com_insert：插入次数
+  
+    Com_delete：删除次数
+  
+    Com_update：更新次数
+  
+    Com_commit：事务次数
+  
+    Com_rollback：回滚次数
+
+show global status like 'Questions';
+show global status like 'Uptime';
+
+QPS = Questions / Uptime
+
+基于Com_commit和Com_rollback计算出TPS：
+show global status like 'Com_commit';
+show global status like 'Com_rollback';
+show global status like 'Uptime';
+
+ TPS = (Com_commit + Com_rollback) / Uptime
+ 
+ 另一计算方式：基于Com_select、Com_insert、Com_delete、Com_update计算出QPS
+ 
+  1
+  show global status where Variable_name in('com_select','com_insert','com_delete','com_update');
+  
+    等待1秒再执行，获取间隔差值，第二次每个变量值减去第一次对应的变量值，就是QPS
+    
+      TPS计算方法：
+show global status where Variable_name in('com_insert','com_delete','com_update');
+
+
+  
+  
+ 
