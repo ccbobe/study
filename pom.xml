@@ -19,6 +19,9 @@
            <!--消息队列学习及其基础知识掌握-->
            <module>rabbitmq</module>
            <module>jetcache</module>
+           <module>leader</module>
+           <module>netty</module>
+
        </modules>
 
 
