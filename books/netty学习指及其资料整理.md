@@ -49,6 +49,29 @@ channel 为netty 网络操作抽象类。他聚合了一组功能，包括但不
 ，主动关闭连接，包括获取该channel 的eventLoop ，获取缓分配器ByteBufAllocator 和 pipeline 等。
 
 
+ChannelHandler 由两部分组成 ChannelInBoundHandler 和 ChannelOutBoundHandler 这两种类型。
+ChannelInboundHandler 是进站处理器.
+
+ChannelPipeline 为 hanndler连接容器   进站   一次进站  inbound   出站延这outbound 后进行出站（尾部向头部的方向出站）。
+
+
+netty 事件传递： 
+channelPipeline和 channel 的调用
+每个channelHandler 被添加到channelPipeline 后，都会创建一个channelHandlerContext并与之创建的ChannelHandler 关联。
+ChannelHandlerContext 允许ChannelHandler 与其他的ChannelHandler 实现进行交互。
+
+(事件传递过程)
+ 1.事件在ChannelPipeline中流经第一个ChannelHandler，进行相应的逻辑处理。
+ 2.ChannelHandler借助ChannelHandlerContext获得下一个ChannelHandler
+ 3.下一个ChannelHandler处理，依次循环，直到传递到ChannelPipeline的尾部
+
+
+(只关注处理，节约系统性能防止事件在整个链条上传递)
+ 其实ChannelHandlerContext的write方法。
+ 这里的ChannelHandlerContext的调用可以跳过某些不感兴趣的ChannelHandlerContext，
+ 可以避免让事件流经整个ChannelPipeline。
+
+
 
 
 

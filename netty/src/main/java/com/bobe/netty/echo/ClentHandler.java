@@ -10,6 +10,7 @@ public class ClentHandler  extends SimpleChannelInboundHandler<FullHttpRequest> 
 	protected void channelRead0(ChannelHandlerContext channelHandlerContext, FullHttpRequest fullHttpRequest) throws Exception {
 		
 		fullHttpRequest.touch("hello world");
+        channelHandlerContext.write(fullHttpRequest);
 		channelHandlerContext.flush();
 	
 	}
@@ -22,7 +23,5 @@ public class ClentHandler  extends SimpleChannelInboundHandler<FullHttpRequest> 
 	@Override
 	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
 		super.channelReadComplete(ctx);
-		ctx.writeAndFlush(ctx.read());
-		ctx.flush();
 	}
 }

@@ -31,8 +31,7 @@ public class EchoClient {
 					pipeline.addLast("encoder", new HttpResponseDecoder()); // 2 用于解码response
 					pipeline.addLast("aggregator", new HttpObjectAggregator(512 * 1024));   // 3
 					pipeline.addLast(new IdleStateHandler(1, 1, 5));
-					pipeline.addLast("echo",new ClentHandler());
-				//	pipeline.addLast("echo",new ClentHandler());
+					pipeline.addLast("simple",new ServerSimpleHandler());
 				}
 			}).connect("127.0.0.1",8080).sync().channel().closeFuture().sync();
 			

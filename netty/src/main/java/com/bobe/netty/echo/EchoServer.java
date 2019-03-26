@@ -44,8 +44,8 @@ public class EchoServer {
 							pipeline.addLast("decoder", new HttpRequestDecoder());   // 1 用于解码request
 							pipeline.addLast("encoder", new HttpResponseEncoder()); // 2 用于编码response
 							pipeline.addLast("aggregator", new HttpObjectAggregator(512 * 1024));   // 3
-							pipeline.addLast("echo",new EchoHandler());
-							pipeline.addLast("simpleWrite",new ServerSimpleHandler());
+							pipeline.addLast("hello world",new EchoHandler());
+							//pipeline.addLast("simpleWrite",new ServerSimpleHandler());
 						}
 					});
 					
