@@ -21,7 +21,7 @@
            <module>jetcache</module>
            <module>leader</module>
            <module>netty</module>
-
+           <module>webflux</module>
        </modules>
 
 
