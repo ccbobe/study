@@ -380,33 +380,47 @@ docker rmi -f runoob/ubantu:v4
 
 
 
-tag
+docker    history 查看指定镜像的创建历史
+
+docker   history [options] image
+
+-H 以可读的 格式打印镜像的大小和日期，默认为true.
+
+--no-trunc : 显示完整的提交记录
+
+-q : 仅列出提交记录ID.
 
 
 
-build
+docker  save [options] image [image ....]
 
+-o 输出到文件
 
+# Docker load 命令
 
-histroy
+导入 docker save   保存文件
 
-
-
-save
-
-
-
-import
-
-
-
-info/version
-
-info
+- **-i :**指定导出的文件。
+- **-q :**精简输出信息。
 
 
 
 
 
-version
+
+
+部署实例（运维工程师编写脚本）
+
+#!/bin/bash
+echo "divine-manager-test_01 开始部署......"
+sudo docker stop divine-manager-test_01 && sudo docker rm divine-manager-test_01 \
+&& sudo docker run -itd --name divine-manager-test_01 \
+-v /mnt/app_data/logs/divine-manager-test_01/:/usr/local/tomcat/logs \
+tomcat:v2 \
+&& sudo docker cp /mnt/app_data/test/war/divine-manager.war divine-manager-test_01:/usr/local/tomcat/webapps/ \
+&& sudo docker cp /mnt/app_data/test/file/divine-manager/muma-boss divine-manager-test_01:/usr/local/tomcat/webapps/ \
+&& sleep 5s \
+&& sudo docker restart divine-manager-test_01 \
+&& sudo docker network connect yf_test divine-manager-test_01
+echo "divine-manager-test_01 部署成功！"
 
