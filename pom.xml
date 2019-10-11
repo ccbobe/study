@@ -22,6 +22,9 @@
            <module>leader</module>
            <module>netty</module>
            <module>webflux</module>
+           <module>kafkamq</module>
+           <module>websocket</module>
+           <module>thrift</module>
        </modules>
 
 
