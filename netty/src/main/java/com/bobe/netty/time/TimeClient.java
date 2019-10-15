@@ -28,7 +28,7 @@ public class TimeClient {
                 }
             });
     
-            ChannelFuture future = bootstrap.connect("127.0.0.1",8080).sync();
+            ChannelFuture future = bootstrap.connect("127.0.0.1",80).sync();
     
             //优雅断开连接
             future.channel().closeFuture().sync();
