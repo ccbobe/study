@@ -42,7 +42,7 @@ public class NettyServer implements InitializingBean {
             if (Epoll.isAvailable()){
 
                 boss = new EpollEventLoopGroup(1);
-                worker = new EpollEventLoopGroup(1);
+                worker = new EpollEventLoopGroup(10);
 
             }else {
                 System.out.println("NIO start.....");
