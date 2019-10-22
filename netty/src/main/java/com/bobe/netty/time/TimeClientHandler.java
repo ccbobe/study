@@ -10,7 +10,7 @@ public class TimeClientHandler extends  ChannelInboundHandlerAdapter{
     private final ByteBuf firstMessage;
     
     public TimeClientHandler() {
-        byte[] req = "QUERY TIME ORDER".getBytes();
+        byte[] req = "江西理工大学".getBytes();
         firstMessage = Unpooled.buffer(req.length);
         firstMessage.writeBytes(req);
     }
@@ -18,7 +18,15 @@ public class TimeClientHandler extends  ChannelInboundHandlerAdapter{
     @Override
     public void channelActive(ChannelHandlerContext ctx) {
         System.out.println("channelActive");
-        ctx.writeAndFlush(firstMessage);
+        try {
+            for (int i=0;i<1000;i++) {
+                Thread.sleep(1);
+                ctx.writeAndFlush(firstMessage);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
     
     
