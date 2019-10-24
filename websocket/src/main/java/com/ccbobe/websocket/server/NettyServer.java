@@ -62,7 +62,7 @@ public class NettyServer implements InitializingBean {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             pipeline.addLast("1",new LoggingHandler(LogLevel.INFO));
-                            pipeline.addLast("common",new CommonHandler());
+                            pipeline.addLast("common",new RequestHandler());
 
                         }
                     });
