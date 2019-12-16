@@ -25,6 +25,7 @@
            <module>kafkamq</module>
            <module>websocket</module>
            <module>thrift</module>
+           <module>hazel</module>
        </modules>
 
 

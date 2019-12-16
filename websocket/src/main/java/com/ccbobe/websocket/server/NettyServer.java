@@ -38,21 +38,15 @@ public class NettyServer implements InitializingBean {
 
         EventLoopGroup worker = null;
         try {
-
             if (Epoll.isAvailable()){
-
                 boss = new EpollEventLoopGroup(1);
                 worker = new EpollEventLoopGroup(10);
-
             }else {
                 System.out.println("NIO start.....");
                 boss = new NioEventLoopGroup(1);
                 worker = new NioEventLoopGroup(1);
             }
-
-
             ServerBootstrap bootstrap = new ServerBootstrap();
-
             bootstrap.group(boss,worker)
                     .option(ChannelOption.SO_BACKLOG,128)
                     .channel(NioServerSocketChannel.class)
@@ -62,7 +56,6 @@ public class NettyServer implements InitializingBean {
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
                             pipeline.addLast("1",new LoggingHandler(LogLevel.INFO));
-                            pipeline.addLast("common",new RequestHandler());
 
                         }
                     });
