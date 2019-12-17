@@ -32,7 +32,6 @@ public class NettyServer implements InitializingBean {
 
     }
 
-    @PostConstruct
     public void initNetty(){
         EventLoopGroup boss = null;
 
