@@ -16,11 +16,12 @@ public class HazelcastConfig {
         Config config = new Config();
         //网络配置信息
         NetworkConfig networkConfig = new NetworkConfig();
-        networkConfig.setInterfaces(new InterfacesConfig().addInterface("192.168.0.*").setEnabled(true));
+        networkConfig.setInterfaces(new InterfacesConfig().setEnabled(true).addInterface("192.168.0.*"));
+
         JoinConfig joinConfig = new JoinConfig();
 
         //广播协议关闭
-        joinConfig.setMulticastConfig(new MulticastConfig().setEnabled(false));
+        joinConfig.getMulticastConfig().setEnabled(false);
         //节点以tcp的方式加入
         joinConfig.setTcpIpConfig(new TcpIpConfig()
                 .setRequiredMember("192.168.0.114")
@@ -28,7 +29,7 @@ public class HazelcastConfig {
                 .setEnabled(true));
         networkConfig.setJoin(joinConfig);
         config.setNetworkConfig(networkConfig);
-        config.setLiteMember(false);
+
         config
                 .setInstanceName("hazelcast-instance")
                 .addMapConfig(

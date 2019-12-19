@@ -1,5 +1,6 @@
 package com.ccbobe.controller;
 
+import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,11 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/")
 public class HazelMapController {
+    @Autowired
+    private Config config;
 
-    HazelcastInstance instance = Hazelcast.newHazelcastInstance();
+
+    HazelcastInstance instance = Hazelcast.newHazelcastInstance(config);
 
     @RequestMapping("maps/{key}/{value}")
     public String set(@PathVariable("key") String key, @PathVariable("value") String value){
