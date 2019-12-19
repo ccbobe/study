@@ -1,6 +1,8 @@
 package com.ccbobe.common.config;
 
 import com.hazelcast.config.*;
+import com.hazelcast.config.cp.CPSubsystemConfig;
+import com.hazelcast.config.cp.RaftAlgorithmConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -38,6 +40,14 @@ public class HazelcastConfig {
                                 .setEvictionPolicy(EvictionPolicy.LRU)
                                 .setTimeToLiveSeconds(20000));
         config.addLockConfig(new LockConfig().setName("lock").setQuorumName("a"));
+
+        config.addExecutorConfig(new ExecutorConfig().setName("exec").setPoolSize(10));
+
+        config.addCountDownLatchConfig(new CountDownLatchConfig().setName("latch"));
+
+
+        config.getCPSubsystemConfig().setCPMemberCount(3);
+
 
         config.addListConfig(new ListConfig()
                 .setName("list").setMergePolicyConfig(
