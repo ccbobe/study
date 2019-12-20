@@ -50,7 +50,7 @@ public class HazelcastConfig {
 
 
         config.getCPSubsystemConfig().setCPMemberCount(3);
-        
+
         config.addTopicConfig(new TopicConfig().setName("topic").setMultiThreadingEnabled(true).setStatisticsEnabled(true));
 
         config.addListConfig(new ListConfig()
