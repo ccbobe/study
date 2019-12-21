@@ -1,8 +1,6 @@
 package com.ccbobe.common.config;
 
 import com.hazelcast.config.*;
-import com.hazelcast.config.cp.CPSubsystemConfig;
-import com.hazelcast.config.cp.RaftAlgorithmConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -20,15 +18,16 @@ public class HazelcastConfig {
         NetworkConfig networkConfig = new NetworkConfig();
         networkConfig.setInterfaces(new InterfacesConfig().setEnabled(true).addInterface("192.168.0.*"));
 
-        networkConfig.setInterfaces(new InterfacesConfig().addInterface("192.168.1.*").setEnabled(true));
+        networkConfig.setInterfaces(new InterfacesConfig().addInterface("192.168.0.*").setEnabled(true));
         JoinConfig joinConfig = new JoinConfig();
 
         //广播协议关闭
         joinConfig.getMulticastConfig().setEnabled(false);
         //节点以tcp的方式加入
         joinConfig.setTcpIpConfig(new TcpIpConfig()
-                .setRequiredMember("192.168.1.143")
-                .addMember("192.168.1.*")
+                .setRequiredMember("192.168.0.130")
+                .addMember("192.168.0.*")
+                .addMember("192.168.0.130:5701")
                 .setEnabled(true));
         networkConfig.setJoin(joinConfig);
         config.setNetworkConfig(networkConfig);
@@ -49,6 +48,8 @@ public class HazelcastConfig {
 
 
         config.getCPSubsystemConfig().setCPMemberCount(3);
+
+
 
 
         config.addListConfig(new ListConfig()

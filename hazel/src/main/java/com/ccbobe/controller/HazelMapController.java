@@ -1,12 +1,12 @@
 package com.ccbobe.controller;
 
-import com.hazelcast.console.Echo;
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ICountDownLatch;
 import com.hazelcast.core.IExecutorService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,9 +28,6 @@ import java.util.concurrent.Future;
 public class HazelMapController {
     @Autowired
     private Config config;
-
-
-    HazelcastInstance instance = Hazelcast.newHazelcastInstance(config);
 
     transient HazelcastInstance  instance = Hazelcast.newHazelcastInstance();
 
@@ -54,6 +51,15 @@ public class HazelMapController {
         Collection<Object> instruments = instance.getMap("instruments").values();
 
         return instruments;
+    }
+
+
+    @RequestMapping("execService")
+    public Object execService(){
+
+        IExecutorService executorService = instance.getExecutorService("exec");
+        executorService.executeOnAllMembers(new Echo());
+        return 123;
     }
 
     @RequestMapping("submitService")
