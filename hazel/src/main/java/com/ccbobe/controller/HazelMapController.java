@@ -1,10 +1,8 @@
 package com.ccbobe.controller;
 
 
-import com.hazelcast.core.Hazelcast;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.ICountDownLatch;
-import com.hazelcast.core.IExecutorService;
+import com.hazelcast.core.*;
+import com.hazelcast.cp.lock.FencedLock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,5 +60,35 @@ public class HazelMapController {
             e.printStackTrace();
         }
         return 123;
+    }
+
+
+    @RequestMapping("offerService")
+    public Object offerService(String name){
+        //生产数据
+
+        IQueue<Object> queue = instance.getQueue("queue");
+        boolean offer = queue.offer(name);
+        return offer;
+    }
+
+    @RequestMapping("takeService")
+    public Object takeService(String name) throws Exception{
+        IQueue<Object> queue = instance.getQueue("queue");
+        //消费数据
+        Object take = queue.take();
+        return take;
+    }
+
+    @RequestMapping("lockService")
+    public Object lockService(String name) throws Exception{
+        FencedLock fencedLock = instance.getCPSubsystem().getLock("lock");
+        if (fencedLock.tryLock()){
+            log.info("已经加锁。。。。。别人无法加锁啦");
+            Thread.sleep(30000);
+        }
+        FencedLock lock = fencedLock;
+        lock.unlock();
+        return lock.isLocked();
     }
 }

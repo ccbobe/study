@@ -11,10 +11,14 @@ public class SubMessageRunner implements CommandLineRunner {
     transient HazelcastInstance instance = Hazelcast.newHazelcastInstance();
 
     @Override
-    public void run(String... args) throws Exception {
-        log.info("监听topic 信息。。。。。");
-        ITopic<String> topic = instance.getTopic("topic");
-        topic.addMessageListener(new MessageListenerImpl());
+    public void run(String... args)  {
+        try {
+            log.info("监听topic 信息。。。。。");
+            ITopic<String> topic = instance.getTopic("topic");
+            topic.addMessageListener(new MessageListenerImpl());
+        } catch (Exception e) {
+            log.error("发送消息出现异常{}",e);
+        }
     }
 
     private class MessageListenerImpl implements MessageListener<String> {
