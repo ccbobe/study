@@ -22,5 +22,6 @@ public class ProducerMessage {
 
         topic.publish("message......"+ LocalDateTime.now());
         log.info("发布消息。。。。。");
+       log.info("{}",instance.getCluster().getClusterState());
     }
 }
