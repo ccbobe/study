@@ -3,6 +3,8 @@ package com.ccbobe.common.config;
 import com.hazelcast.config.*;
 import com.hazelcast.config.cp.CPSubsystemConfig;
 import com.hazelcast.config.cp.RaftAlgorithmConfig;
+import com.hazelcast.core.Hazelcast;
+import com.hazelcast.core.HazelcastInstance;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +16,11 @@ import java.util.Map;
  */
 @Configuration
 public class HazelcastConfig {
+
+    @Bean
+    public HazelcastInstance hazelcastInstance(){
+        return Hazelcast.newHazelcastInstance(config());
+    }
 
     @Bean
     public Config config(){
