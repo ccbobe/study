@@ -1,5 +1,6 @@
 package com.ccbobe.controller;
 
+
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
@@ -12,9 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
-import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -32,6 +30,7 @@ public class HazelMapController {
     transient HazelcastInstance  instance = Hazelcast.newHazelcastInstance();
 
     //------------------------map------------------------------------
+
     @RequestMapping("maps/{key}/{value}")
     public String set(@PathVariable("key") String key, @PathVariable("value") String value){
 
