@@ -3410,3 +3410,40 @@ Caused by: org.springframework.expression.spel.SpelEvaluationException: EL1008E:
 2019-12-26 16:03:24.983  INFO 13096 --- [http-nio-8080-exec-3] c.c.websocket.value.ValueController      : 获取到静态数据{}
 2019-12-26 16:04:03.911  INFO 13096 --- [http-nio-8080-exec-9] c.c.websocket.value.ValueController      : 获取到静态数据{}
 2019-12-26 16:04:15.937  INFO 13096 --- [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
+2019-12-26 16:05:01.276  INFO 684 --- [restartedMain] c.ccbobe.websocket.WebsocketApplication  : Starting WebsocketApplication on DESKTOP-86M9JG6 with PID 684 (D:\workspace\20191125\study\websocket\target\classes started by Administrator in D:\workspace\20191125\study)
+2019-12-26 16:05:01.281  INFO 684 --- [restartedMain] c.ccbobe.websocket.WebsocketApplication  : No active profile set, falling back to default profiles: default
+2019-12-26 16:05:01.335  INFO 684 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-12-26 16:05:01.335  INFO 684 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-12-26 16:05:02.324  INFO 684 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-12-26 16:05:02.347  INFO 684 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-12-26 16:05:02.347  INFO 684 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.16]
+2019-12-26 16:05:02.353  INFO 684 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [D:\Program Files\Java\jdk1.8.0_212\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\Program Files (x86)\NetSarang\Xftp 6\;C:\Program Files (x86)\NetSarang\Xshell 6\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;D:\Program Files\Java\jdk1.8.0_212\bin;C:\Program Files\nodejs\;C:\Program Files\TortoiseGit\bin;D:\arcore\;D:\Program Files\Java\jre1.8.0_212\bin;d:\Program Files\Git\cmd;C:\ProgramData\Administrator\atom\bin;C:\Users\Administrator\AppData\Local\atom\bin;C:\Users\Administrator\AppData\Local\BypassRuntm;.]
+2019-12-26 16:05:02.401  INFO 684 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-12-26 16:05:02.401  INFO 684 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1066 ms
+2019-12-26 16:05:02.471  INFO 684 --- [restartedMain] com.ccbobe.websocket.watch.FileMonitor   : 文件监控器初始化.......
+2019-12-26 16:05:02.474  INFO 684 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'threadPoolTaskExecutor'
+2019-12-26 16:05:02.475  INFO 684 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'threadPool'
+2019-12-26 16:05:02.518  INFO 684 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'clientInboundChannelExecutor'
+2019-12-26 16:05:02.521  INFO 684 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'clientOutboundChannelExecutor'
+2019-12-26 16:05:02.524  INFO 684 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'messageBrokerTaskScheduler'
+2019-12-26 16:05:02.547  INFO 684 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'brokerChannelExecutor'
+2019-12-26 16:05:02.746  INFO 684 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-12-26 16:05:02.759  INFO 684 --- [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Starting...
+2019-12-26 16:05:02.759  INFO 684 --- [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : BrokerAvailabilityEvent[available=true, SimpleBrokerMessageHandler [DefaultSubscriptionRegistry[cache[0 destination(s)], registry[0 sessions]]]]
+2019-12-26 16:05:02.760  INFO 684 --- [restartedMain] o.s.m.s.b.SimpleBrokerMessageHandler     : Started.
+2019-12-26 16:05:02.765  INFO 684 --- [restartedMain] c.c.websocket.StopApplicationListener    : 系统停止打出日志信息
+2019-12-26 16:05:02.832  INFO 684 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path ''
+2019-12-26 16:05:02.834  INFO 684 --- [restartedMain] c.ccbobe.websocket.WebsocketApplication  : Started WebsocketApplication in 1.829 seconds (JVM running for 2.353)
+2019-12-26 16:05:02.835  INFO 684 --- [restartedMain] c.ccbobe.websocket.watch.CommandRunner   : 开始监控指定文件
+2019-12-26 16:05:10.397  INFO 684 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-12-26 16:05:10.397  INFO 684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-12-26 16:05:10.401  INFO 684 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 4 ms
+2019-12-26 16:05:10.414  INFO 684 --- [http-nio-8080-exec-1] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:05:12.039  INFO 684 --- [http-nio-8080-exec-3] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:05:12.215  INFO 684 --- [http-nio-8080-exec-9] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:05:12.383  INFO 684 --- [http-nio-8080-exec-7] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:05:12.535  INFO 684 --- [http-nio-8080-exec-5] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:05:12.692  INFO 684 --- [http-nio-8080-exec-1] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:05:12.841  INFO 684 --- [http-nio-8080-exec-3] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:05:13.000  INFO 684 --- [http-nio-8080-exec-9] c.c.websocket.value.ValueController      : 获取到静态数据{}
+2019-12-26 16:06:02.546  INFO 684 --- [MessageBroker-1] o.s.w.s.c.WebSocketMessageBrokerStats    : WebSocketSession[0 current WS(0)-HttpStream(0)-HttpPoll(0), 0 total, 0 closed abnormally (0 connect failure, 0 send limit, 0 transport error)], stompSubProtocol[processed CONNECT(0)-CONNECTED(0)-DISCONNECT(0)], stompBrokerRelay[null], inboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], outboundChannel[pool size = 0, active threads = 0, queued tasks = 0, completed tasks = 0], sockJsScheduler[pool size = 1, active threads = 1, queued tasks = 0, completed tasks = 0]
