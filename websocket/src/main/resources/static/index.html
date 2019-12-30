@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket Test</title>
+</head>
+<body>
+<h2>WebSocket Test</h2>
+
+<div id="greeting"></div>
+<hr/>
+<div id="debug"></div>
+
+<script src="https://cdn.bootcss.com/sockjs-client/1.4.0/sockjs.js"></script>
+<script src="https://cdn.bootcss.com/stomp.js/2.3.3/stomp.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    function onGreeting(greeting) {
+        $("#greeting").append(greeting.body + "\n");
+        console.log("body====>"+greeting.body)
+    }
+    $(document).ready(function () {
+        var url, ws, stompClient;
+//        url = "ws://localhost:8080/websocket/greetings";
+        url = "ws://192.168.0.114:8081/messages";
+        ws = new WebSocket(url);
+        ws.addEventListener('open', function(){
+            console.log("Connection established, handle with event");
+        });
+        ws.onopen = function(){
+            console.log("Connection established, handle with function");
+        };
+        stompClient = Stomp.over(ws);
+        stompClient.connect({}, {},
+            function () {
+                stompClient.subscribe("/topic/test", onGreeting);
+                console.log(onGreeting)
+                stompClient.debug = function (str) {
+                    $("#debug").append(str + "\n");
+                };
+                console.log("STOMP over WebSocket connected.");
+            },
+            function (err) {
+                console.log(JSON.stringify(err));
+                console.log(err+"=====>")
+              //  stompClient.disconnect();
+            }
+        );
+    });
+</script>
+</body>
+</html>
+

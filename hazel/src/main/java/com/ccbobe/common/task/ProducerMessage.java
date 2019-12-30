@@ -16,12 +16,13 @@ public class ProducerMessage {
     transient HazelcastInstance instance = Hazelcast.newHazelcastInstance();
 
     @Scheduled(fixedDelay = 1000)
-    public void produceMsg(){
+    public void produceMsg() {
+
 
         ITopic<Object> topic = instance.getTopic("topic");
 
-        topic.publish("message......"+ LocalDateTime.now());
+        topic.publish("message......" + LocalDateTime.now());
         log.info("发布消息。。。。。");
-       log.info("{}",instance.getCluster().getClusterState());
+        log.info("{}", instance.getCluster().getClusterState());
     }
 }
