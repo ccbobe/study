@@ -7,12 +7,10 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 
 public class TimeClientHandler extends  ChannelInboundHandlerAdapter{
     
-    private final ByteBuf firstMessage;
+    private ByteBuf firstMessage;
     
     public TimeClientHandler() {
-        byte[] req = "江西理工大学".getBytes();
-        firstMessage = Unpooled.buffer(req.length);
-        firstMessage.writeBytes(req);
+
     }
     
     @Override
@@ -20,8 +18,10 @@ public class TimeClientHandler extends  ChannelInboundHandlerAdapter{
         System.out.println("channelActive");
         try {
             for (int i=0;i<1000;i++) {
-                Thread.sleep(1);
-                ctx.writeAndFlush(firstMessage);
+                byte[] req = "ccbobe...".getBytes();
+                firstMessage = Unpooled.buffer(req.length);
+                Thread.sleep(10);
+                ctx.channel().writeAndFlush(firstMessage);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

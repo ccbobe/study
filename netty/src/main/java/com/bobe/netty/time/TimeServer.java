@@ -31,10 +31,8 @@ public class TimeServer {
                 boss = new NioEventLoopGroup(1);
                 worker = new NioEventLoopGroup(1);
             }
-            
-            
+
             ServerBootstrap bootstrap = new ServerBootstrap();
-            
             bootstrap.group(boss,worker)
                     .option(ChannelOption.SO_BACKLOG,128)
                     .channel(NioServerSocketChannel.class)

@@ -5,8 +5,11 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 
 public class TimeClient {
     
@@ -24,14 +27,15 @@ public class TimeClient {
                 protected void initChannel(SocketChannel sh) throws Exception {
                     ChannelPipeline pipeline = sh.pipeline();
                     pipeline.addLast("1",new LoggingHandler(LogLevel.INFO));
-                    pipeline.addLast("4",new TimeClientHandler());
+                    pipeline.addLast(new StringEncoder());
+                    pipeline.addLast(new StringDecoder());
+                    pipeline.addLast(new IdleStateHandler(5,5,30));
                 }
             });
     
-            ChannelFuture future = bootstrap.connect("127.0.0.1",8080).sync();
-    
-            //优雅断开连接
-            future.channel().closeFuture().sync();
+            ChannelFuture future = bootstrap.connect("127.0.0.1",8082).sync();
+
+            future.channel().closeFuture().sync().await();
             
         } catch (InterruptedException e) {
             e.printStackTrace();
