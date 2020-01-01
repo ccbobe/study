@@ -26,6 +26,7 @@
            <module>websocket</module>
            <module>thrift</module>
            <module>hazel</module>
+           <module>netty-client</module>
        </modules>
 
 

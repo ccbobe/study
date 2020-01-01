@@ -32,9 +32,13 @@ public class WebsocketConfig implements WebSocketMessageBrokerConfigurer {
                 .setClientPasscode("test")
                 .setSystemLogin("test")
                 .setVirtualHost("/");
-       // 表示在queue和topic这两个域上可以向客户端发消息
+
+        // 表示在queue和topic这两个域上可以向客户端发消息
+
         //registry.enableSimpleBroker("/queue/", "/topic/");
-        //表示给指定用户发送一对一的主题前缀是"/user"
+
+        // 表示给指定用户发送一对一的主题前缀是/user
+
         registry.setUserDestinationPrefix("/user");
         registry.setApplicationDestinationPrefixes("/app");
 
