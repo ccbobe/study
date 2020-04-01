@@ -8,15 +8,18 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 @Slf4j
 @Component
-public class UserProvider implements UserService.Iface,UserService.AsyncIface {
+public class UserProvider implements UserService.Iface {
     @Override
     public User addUser(User user) throws TException {
-        return null;
+        return user;
     }
 
     @Override
     public User getUser(long userId) throws TException {
-        return null;
+        User user = new User();
+        user.setUserId(userId);
+        user.setUserName("ccbobe"+System.currentTimeMillis());
+        return user;
     }
 
     @Override
@@ -26,26 +29,7 @@ public class UserProvider implements UserService.Iface,UserService.AsyncIface {
 
     @Override
     public User updateUser(User user) throws TException {
-        return null;
+        return user;
     }
 
-    @Override
-    public void addUser(User user, AsyncMethodCallback<User> resultHandler) throws TException {
-
-    }
-
-    @Override
-    public void getUser(long userId, AsyncMethodCallback<User> resultHandler) throws TException {
-
-    }
-
-    @Override
-    public void queryUsers(AsyncMethodCallback<List<User>> resultHandler) throws TException {
-
-    }
-
-    @Override
-    public void updateUser(User user, AsyncMethodCallback<User> resultHandler) throws TException {
-
-    }
 }
