@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
 
 @Slf4j
 @Component
@@ -54,6 +55,30 @@ public class InitThriftServer implements CommandLineRunner {
             }
         }.start();
 
+        new Thread(){
+            @Override
+            public void run(){
+                log.info("启动远程服务");
+                try {
+                    TProcessor processor = new DateService.Processor<DateService.Iface>(new DateProvider());
+
+                    // 简单的单线程服务模型,阻塞IO
+                    TServerSocket serverTransport = new TServerSocket(9998);
+                    TThreadPoolServer.Args tArgs = new TThreadPoolServer.Args(serverTransport);
+                    tArgs.processor(processor);
+                    ////使用二进制协议
+                    tArgs.protocolFactory(new TBinaryProtocol.Factory());
+                    //tArgs.transportFactory(new TFramedTransport.Factory());
+                    //创建服务器
+                    tArgs.executorService(Executors.newCachedThreadPool());
+                    TServer server = new TThreadPoolServer(tArgs);
+                    System.out.println("DateServer start....");
+                    server.serve(); // 启动服务
+                } catch (Exception e) {
+                    log.error("请求错误{}",e);
+                }
+            }
+        }.start();
 
     }
 

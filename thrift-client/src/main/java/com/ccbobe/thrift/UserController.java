@@ -22,4 +22,11 @@ public class UserController {
         User user = client.getClient().getUser(userId);
         return user;
     }
+
+
+    @RequestMapping("getDate")
+    public Response getDate(Long userId)throws Exception{
+        Response response = client.getDateClient().getDate();
+        return response;
+    }
 }

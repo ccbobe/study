@@ -24,6 +24,8 @@ public class UserServiceClient implements DisposableBean {
 
     private UserService.Client client = null;
 
+    private DateService.Client dateClient = null;
+
     @PostConstruct
     public UserService.Client initUserClient(){
         try {
@@ -46,12 +48,37 @@ public class UserServiceClient implements DisposableBean {
         return null;
     }
 
+    @PostConstruct
+    public DateService.Client initDateClient(){
+        try {
+            transport = new TSocket("0.0.0.0", 9998, 30000);
+
+            // 协议要和服务端一致
+            TProtocol protocol = new TBinaryProtocol(transport);
+
+            DateService.Client client = new DateService.Client(protocol);
+
+            transport.open();
+            dateClient = client;
+            return client;
+        } catch (TTransportException e) {
+            e.printStackTrace();
+        } catch (TException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public UserService.Client getClient() {
         return client;
     }
 
     public void setClient(UserService.Client client) {
         this.client = client;
+    }
+
+    public DateService.Client getDateClient() {
+        return dateClient;
     }
 
     @Override
