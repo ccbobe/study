@@ -3,19 +3,18 @@ package com.ccbobe.thrift;
 import com.fasterxml.jackson.core.JsonParser;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.thrift.TException;
-import org.apache.thrift.protocol.TBinaryProtocol;
-import org.apache.thrift.protocol.TCompactProtocol;
-import org.apache.thrift.protocol.TJSONProtocol;
-import org.apache.thrift.protocol.TProtocol;
-import org.apache.thrift.transport.TFramedTransport;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TTransportException;
+import org.apache.thrift.async.TAsyncClientManager;
+import org.apache.thrift.protocol.*;
+import org.apache.thrift.transport.*;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.io.IOException;
+
+@Scope("prototype")
 @Slf4j
 @Component
 public class UserServiceClient implements DisposableBean {
@@ -23,6 +22,8 @@ public class UserServiceClient implements DisposableBean {
     private  TTransport transport = null;
 
     private UserService.Client client = null;
+
+    private UserService.AsyncClient userAsyncClient = null;
 
     private DateService.Client dateClient = null;
 
@@ -54,7 +55,7 @@ public class UserServiceClient implements DisposableBean {
             transport = new TSocket("0.0.0.0", 9998, 30000);
 
             // 协议要和服务端一致
-            TProtocol protocol = new TBinaryProtocol(transport);
+            TProtocol protocol = new TCompactProtocol(transport);
 
             DateService.Client client = new DateService.Client(protocol);
 
@@ -86,5 +87,28 @@ public class UserServiceClient implements DisposableBean {
         if (null != transport) {
             transport.close();
         }
+    }
+
+    public UserService.AsyncClient getUserAsyncClient() {
+        return userAsyncClient;
+    }
+
+    @PostConstruct
+    public UserService.AsyncClient initUserAsyncClient(){
+        try {
+
+            // 协议要和服务端一致
+            // 客户端应该使用非阻塞 IO
+            TProtocolFactory tProtocolFactory = new TBinaryProtocol.Factory();
+            TNonblockingTransport transport = new TNonblockingSocket("0.0.0.0",9997,50000);
+            TAsyncClientManager tAsyncClientManager = new TAsyncClientManager();
+            UserService.AsyncClient client = new UserService.AsyncClient(tProtocolFactory,tAsyncClientManager,transport);
+            this.userAsyncClient = client;
+            return userAsyncClient;
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

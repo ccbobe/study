@@ -26,6 +26,8 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
   public int age; // required
   public @org.apache.thrift.annotation.Nullable String url; // required
 
+
+
   /** The set of fields this struct contains, along with convenience methods for finding and manipulating them. */
   public enum _Fields implements org.apache.thrift.TFieldIdEnum {
     USER_ID((short)1, "userId"),
@@ -775,6 +777,8 @@ public class User implements org.apache.thrift.TBase<User, User._Fields>, java.i
       }
     }
   }
+
+
 
   private static <S extends org.apache.thrift.scheme.IScheme> S scheme(org.apache.thrift.protocol.TProtocol proto) {
     return (org.apache.thrift.scheme.StandardScheme.class.equals(proto.getScheme()) ? STANDARD_SCHEME_FACTORY : TUPLE_SCHEME_FACTORY).getScheme();
