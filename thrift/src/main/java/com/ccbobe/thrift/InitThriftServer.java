@@ -87,7 +87,6 @@ public class InitThriftServer implements CommandLineRunner {
                     TNonblockingServerTransport serverTransport =  new TNonblockingServerSocket(new InetSocketAddress("0.0.0.0",9997));
                     TProcessor processor = new UserService.AsyncProcessor<UserService.AsyncIface>(new UserProvider());
 
-
                     // 多线程半同步半异步
                     TThreadedSelectorServer.Args tArgs = new TThreadedSelectorServer.Args(serverTransport);
                     tArgs.processor(processor);
