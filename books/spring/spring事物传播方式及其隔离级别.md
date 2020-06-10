@@ -1,0 +1,27 @@
+@Transactional注解
+propagation：指定事务定义中使用的传播
+isolation：设定事务的隔离级别
+timeout：指定事务的超市（秒）
+readOnly：指定事务的超时
+noRollbackFor：目标方法可抛出的异常所构成的数组，但通知仍会提交事务
+rollbackFor：异常所构成的数组，如果目标方法抛出了这些异常，通知就会回滚事务
+
+事务隔离级别：
+隔离级别 说明
+ISOLATION_DEFAULT 默认级别（对大多数数据库来说就是ISOLATION_READ_COMMITTED）
+ISOLATION_READ_UNCOMMITTED 最低的隔离级别。事实上我们不应该隔离级别，因为在事务完成前，其他事务可以看到该事务所修改的数据。而在其他事务提交前，该事务也可以看到其他事务所做的修改。
+ISOLATION_READ_COMMITTED 大多数数据库的默认级别。在事务完成前，其他事务无法看到该事务所修改的数据。遗憾的是，在该事务提交后，你就可以查看其他事务插入活更新的数据。这意味着在事务的不同点上，如果其他事务修改数据，你会看到不同的数据。
+ISOLATION_REPEATABLE_READ 该隔离级别确保如果在事务中查询了某个数据集，你至少还能再次查询到相同的数据集，即使其他事务修改了所查询的数据。然而如果其他事务插入了新数据，你就可以查询到该新插入的数据。
+ISOLATION_SERIALIZABLE 代价最大、可靠性最高的隔离级别，所有的事务都是俺顺序一个接一个的执行。
+getPropagationBehavior：指定了当代码请求一个新的事务时Spring所做的事情。
+传播行为指：
+传播行为 说明
+PROPAGATION_REQUIRED 当前如果有事务，Spring就会使用该事务；否则会开始一个新事务。
+PROPAGATION_SUPPORTS 当前如果有事务，Spring就会使用该事务；否则不会开启一个新事务。
+PROPAGATION_MANDATORY 当前如果有事务，Spring就会使用该事务；否则会抛出异常。
+PROPAGATION_REQUIRES_NEW Spring总会开始一个新事务。如果当前有事务，则该事务挂起。
+PROPAGATION_NOT_SUPPORTED Spring不会执行事务中的代码。代码总是在非事务环境下执行，如果当期有事务，则该事务挂起。
+PROPAGATION_NEVER 即使当前有事务，Spring也会在飞事务环境下执行。如果当前有事务，则抛出异常。
+PROPAGATION_NESTED 如果当前有事务，则在嵌套事务中执行。如果没有，那么执行情况与PROPAGATION_REQUIRED一样。
+
+
