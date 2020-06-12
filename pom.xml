@@ -30,6 +30,7 @@
            <module>google</module>
            <module>thrift-client</module>
            <module>akka</module>
+           <module>es-core-server</module>
        </modules>
 
 

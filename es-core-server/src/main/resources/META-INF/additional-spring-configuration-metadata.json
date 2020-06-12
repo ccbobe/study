@@ -1,0 +1,118 @@
+{
+  "groups": [
+    {
+      "name": "self",
+      "type": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "self.check",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "description": "check status",
+      "defaultValue": true
+    },
+    {
+      "name": "self.ack",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "description": "check ack",
+      "defaultValue": false
+    },
+    {
+      "name": "self.mode",
+      "type": "java.lang.String",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "description": "check mode",
+      "defaultValue": "auto"
+    },
+    {
+      "name": "self.name",
+      "type": "java.lang.String",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "description": "check name",
+      "defaultValue": "default",
+      "deprecation": {
+        "level": "warning",
+        "reason": "deprecation",
+        "replacement": "self.config.desc"
+      }
+    },
+    {
+      "name": "self.config.info",
+      "type": "java.lang.String",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "description": "config info",
+      "defaultValue": "info"
+    },
+    {
+      "name": "self.config.level",
+      "type": "java.lang.String",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "description": "config level",
+      "defaultValue": "1"
+    },
+    {
+      "name": "self.config.desc",
+      "type": "java.lang.String",
+      "sourceType": "com.ccbobe.escoreserver.HealthCheckConfig",
+      "description": "config desc",
+      "defaultValue": "info"
+    }
+  ],
+  "hints": [
+    {
+      "name": "self.mode",
+      "values": [
+        {
+          "value": "auto",
+          "description": "auto"
+        },
+        {
+          "value": "manual",
+          "description": "Manual"
+        },
+        {
+          "value": "disable",
+          "description": "Disable"
+        }
+      ]
+    },
+    {
+      "name": "self.config.info",
+      "values": [
+        {
+          "value": "info",
+          "description": "info"
+        },
+        {
+          "value": "error",
+          "description": "error"
+        },
+        {
+          "value": "waring",
+          "description": "waring"
+        }
+      ]
+    },
+    {
+      "name": "self.config.level",
+      "values": [
+        {
+          "value": "1",
+          "description": "one"
+        },
+        {
+          "value": "2",
+          "description": "two"
+        },
+        {
+          "value": "3",
+          "description": "three"
+        }
+      ]
+    }
+  ]
+}
