@@ -1,6 +1,0 @@
-self:
-  ack: false
-  config:
-    desc: info
-    level: 3
-  check: true
