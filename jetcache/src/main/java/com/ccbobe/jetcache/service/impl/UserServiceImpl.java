@@ -8,6 +8,7 @@ import com.ccbobe.jetcache.repository.UserRepository;
 import com.ccbobe.jetcache.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.concurrent.TimeUnit;
 
@@ -27,6 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
+    @Transactional
     @Cached(name = "user.",key = "#id",expire = 3600,localLimit = 50,cacheType = CacheType.BOTH)
     @CacheRefresh(refresh = 200,stopRefreshAfterLastAccess = 100,timeUnit = TimeUnit.MINUTES,refreshLockTimeout = 2)
     @Override

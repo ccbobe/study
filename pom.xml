@@ -27,6 +27,9 @@
            <module>thrift</module>
            <module>hazel</module>
            <module>netty-client</module>
+           <module>google</module>
+           <module>thrift-client</module>
+           <module>akka</module>
        </modules>
 
 
