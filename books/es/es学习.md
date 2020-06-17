@@ -56,3 +56,81 @@ POST /users/_update/1?pretty
  "script":"ctx._source.user.age += 5"
 }
 
+
+新增文档
+POST /products/_doc/5
+{
+  
+  "name" : "蓝月亮洗衣液",
+  "count" : 65,
+  "price" : 55.6,
+  "tag" : [
+    "不伤手",
+    "泡沫多",
+    "除菌"
+  ]
+}
+
+查询文档
+GET /products/_search
+{
+  "query": {
+    "match_all": {
+    }
+  }
+}
+
+修改文档属性
+POST /products/_update/1
+{
+  "script": "ctx._source.name='新奇洗衣粉'"
+}
+
+新增文档
+POST /products/_doc/5
+{
+  "name" : "蓝月亮洗衣液",
+  "count" : 65,
+  "price" : 55.6,
+  "tag" : [
+    "不伤手",
+    "泡沫多",
+    "除菌"
+  ]
+}
+### 聚合查询
+POST /products/_search
+{
+  "size": 0, 
+  "aggs": {
+    "tag_group": {
+      "terms": {
+        "field":"count"
+      }
+    }
+  }
+}
+利用分词查询产品信息
+GET /products/_search
+{
+ "query": {
+   "match": {
+      "name": {
+        "query": "蓝月亮 洗衣粉"
+        , "analyzer": "ik_max_word"
+      }
+   }
+ },
+ "highlight": {
+   "fields": {"name": {}}
+ }
+}
+
+###将sql 语句查询改造成为dsl 查询语句
+
+POST /_sql/translate
+{
+    "query": "SELECT * FROM products where name like '%洗衣粉%' ORDER BY price DESC",
+    "fetch_size": 10
+}
+
