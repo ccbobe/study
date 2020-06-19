@@ -10,6 +10,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 import javax.annotation.PostConstruct;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @EnableElasticsearchRepositories
@@ -51,8 +52,14 @@ public class EsCoreServerApplication {
         productRepository.save(build);
 
 
-        productRepository.deleteById("mMTOwXIBb1KKomS_R32s");
 
+
+       productRepository.deleteById("mMTOwXIBb1KKomS_R32s");
+
+
+        List<Products> list = productRepository.queryProductsByNameLike("中国人的洗衣粉");
+
+        System.out.println(JSON.toJSONString(list));
     }
 
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
 
 import java.util.List;
 
@@ -20,11 +21,12 @@ import java.util.List;
 public class Products {
     private @Id Integer id;
 
+    @Field(fielddata = true,analyzer = "ik_max_word",searchAnalyzer = "ik_max_word")
     private String name;
 
     private Double price;
 
     private Integer count;
-
+    @Field(fielddata = true)
     private List<String> tag;
 }
