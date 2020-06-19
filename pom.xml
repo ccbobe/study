@@ -31,6 +31,8 @@
            <module>thrift-client</module>
            <module>akka</module>
            <module>es-core-server</module>
+           <module>rsocket-client</module>
+           <module>rsocket-server</module>
        </modules>
 
 
