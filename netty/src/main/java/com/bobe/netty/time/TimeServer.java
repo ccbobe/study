@@ -1,12 +1,18 @@
 package com.bobe.netty.time;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.epoll.EpollEventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.json.JsonObjectDecoder;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
@@ -41,9 +47,15 @@ public class TimeServer {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             ChannelPipeline pipeline = socketChannel.pipeline();
-                           pipeline.addLast("1",new LoggingHandler(LogLevel.INFO));
-                            pipeline.addLast("4",new TimeServerHandler());
-                           
+
+                            ByteBuf buf = Unpooled.copiedBuffer("ff".getBytes());
+                            pipeline.addLast("1",new LoggingHandler(LogLevel.INFO));
+                           // pipeline.addLast("de",new DelimiterBasedFrameDecoder(4096,false,buf));
+                             pipeline.addLast("StringDecoder",new StringDecoder());
+
+                            pipeline.addLast("StringEncoder",new StringEncoder());
+                            pipeline.addLast("4",new SimpleHandler());
+
                         }
                     });
             //

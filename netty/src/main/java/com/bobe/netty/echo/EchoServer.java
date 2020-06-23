@@ -40,7 +40,7 @@ public class EchoServer {
 							ChannelPipeline pipeline =sh.pipeline();
 							//添加处理器信息
 							
-						//	pipeline.addLast("logging",new LoggingHandler(LogLevel.INFO));
+						    //pipeline.addLast("logging",new LoggingHandler(LogLevel.INFO));
 							pipeline.addLast("decoder", new HttpRequestDecoder());   // 1 用于解码request
 							pipeline.addLast("encoder", new HttpResponseEncoder()); // 2 用于编码response
 							pipeline.addLast("aggregator", new HttpObjectAggregator(512 * 1024));   // 3
