@@ -33,6 +33,7 @@
            <module>es-core-server</module>
            <module>rsocket-client</module>
            <module>rsocket-server</module>
+           <module>io-core</module>
        </modules>
 
 
