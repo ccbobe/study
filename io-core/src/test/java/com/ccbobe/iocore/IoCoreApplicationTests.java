@@ -1,8 +1,8 @@
 package com.ccbobe.iocore;
 
-import org.apache.tomcat.util.http.fileupload.FileUtils;
+import io.vavr.*;
+import io.vavr.control.Try;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -10,6 +10,8 @@ import java.nio.file.*;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.ArrayList;
 import java.util.Iterator;
+
+import static io.vavr.API.*;
 
 class IoCoreApplicationTests {
 
@@ -52,14 +54,51 @@ class IoCoreApplicationTests {
         System.out.println(owner.getName());
         System.out.println(Files.exists(path,LinkOption.NOFOLLOW_LINKS));
 
-
         Files.write(path," ccbobe is a boy\r\n".getBytes(),LinkOption.NOFOLLOW_LINKS);
 
-
         BufferedReader reader = Files.newBufferedReader(path);
+        String str = null;
+        while((str = reader.readLine()) != null) {
+            System.out.println(str);
+        }
+        System.out.println(Files.size(path));
+        //Files.createLink(Paths.get("D://datas"),path);
 
-        System.out.println(reader.readLine());
+        FileStore fileStore = Files.getFileStore(path);
+        System.out.println(fileStore.type());
+        System.out.println(fileStore.getTotalSpace());
+        System.out.println(fileStore.getUnallocatedSpace());
 
+        OutputStream outputStream = Files.newOutputStream(Paths.get("D://files//dd.txt"));
+        outputStream.write("1".getBytes());
+        outputStream.flush();
+
+    }
+
+    @Test
+    public void testVavr(){
+
+        Try<Double> result = Try.of(()->1/1.333);
+        if (result.isSuccess()){
+            System.out.println(result.get());
+        }
+        Tuple2<String, Integer> java = Tuple.of("java", 8);
+        Tuple3<String, Integer, String> tuple3 = Tuple.of("java", 1, "a");
+        String s = java._1;
+        System.out.println(s);
+        System.out.println(java._2());
+        System.out.println(tuple3._3());
+
+    }
+    @Test
+    public void testMatch(){
+        int input = 3;
+        String output = Match(input).of(
+                Case($(1), "one"),
+                Case($(2), "two"),
+                Case($(3), "three"),
+                Case($(), "*"));
+        System.out.println(output);
     }
 
     @Test
