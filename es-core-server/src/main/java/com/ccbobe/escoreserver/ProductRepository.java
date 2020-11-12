@@ -14,4 +14,6 @@ public interface ProductRepository extends ElasticsearchRepository<Products, Ser
 
     public Page<Products> findAllByTag(String tagName);
 
+    public Page<Process> queryProductsByName(String name);
+
 }
