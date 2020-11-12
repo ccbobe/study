@@ -10,4 +10,9 @@ class EsCoreServerApplicationTests {
     void contextLoads() {
     }
 
+
+    public static void main(String[] args) {
+        System.out.println("Java   你好");
+    }
+
 }

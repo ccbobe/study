@@ -101,4 +101,9 @@ class IoCoreApplicationTests {
         System.out.println(output);
     }
 
+    @Test
+    public void test(){
+        System.out.println("你好");
+    }
+
 }

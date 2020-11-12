@@ -13,7 +13,7 @@
             $("#response").html();
         }
         function connect(options) {
-            var socket = new SockJS("http://192.168.0.114:8080/messsages");
+            var socket = new SockJS("http://192.168.124.44:8082/messages");
             stompClient = Stomp.over(socket);
             stompClient.connect({}, function(frame) {
                 setConnected(true);

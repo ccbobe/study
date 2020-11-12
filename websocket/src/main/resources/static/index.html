@@ -23,7 +23,7 @@
     $(document).ready(function () {
         var url, ws, stompClient;
 //        url = "ws://localhost:8080/websocket/greetings";
-        url = "ws://192.168.0.114:8081/messages";
+        url = "http://192.168.124.44:8082/messages";
         ws = new WebSocket(url);
         ws.addEventListener('open', function(){
             console.log("Connection established, handle with event");
@@ -44,7 +44,7 @@
             function (err) {
                 console.log(JSON.stringify(err));
                 console.log(err+"=====>")
-              //  stompClient.disconnect();
+                stompClient.disconnect();
             }
         );
     });

@@ -50,7 +50,7 @@ public class CommandRunner implements CommandLineRunner {
                     String fileName = event.context().toString();
                     log.info("当前文件变化{}==>{}",fileName,event.kind().name());
 
-                    //相关业务擦做
+                    //相关业务操作
                 }
                 //重置监控器进行下一个文件监控
                 boolean isKeyValid = watchKey.reset();
