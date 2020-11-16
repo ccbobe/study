@@ -1,5 +1,10 @@
 package com.ccbobe.iocore;
 
+import org.junit.Test;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class StringDemo {
     public static void main(String[] args) {
         int x=10;
@@ -153,6 +158,32 @@ public class StringDemo {
         byte _b1 = Byte.decode("0x" + new String(new byte[]{src1})).byteValue();
         byte ret = (byte) (b0 ^ _b1);
         return ret;
+    }
+
+
+
+    @Test
+    public void execArr(){
+        /**
+         * 在一个长度为 n 的数组里的所有数字都在 0 到 n-1 的范围内。
+         * 数组中某些数字是重复的，但不知道有几个数字是重复的，
+         * 也不知道每个数字重复几次。请找出数组中任意一个重复的数字。
+         *   Input:
+         *   {2, 3, 1, 0, 2, 5}
+         *
+         *   Output:
+         *   2
+         *
+         */
+        int arr[]={2, 5, 1, 0, 4, 5};
+        Set set = new HashSet(arr.length);
+        for (int i = 0; i < arr.length; i++) {
+            boolean add = set.add(arr[i]);
+            if (!add){
+                System.out.println(arr[i]);
+                break;
+            }
+        }
     }
 
 }
