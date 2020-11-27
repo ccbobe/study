@@ -22,10 +22,11 @@ public class MailServiceApplication {
     @PostConstruct
     public void sender(){
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setFrom("2442313959@qq.com");//发送者
-        msg.setTo("1132717195@qq.com");//接收者
-        msg.setSubject("测试邮箱服务");//标题
-        msg.setText("test hello world");//内容
+        msg.setFrom("634231604@qq.com");//发送者
+        msg.setTo("luyang@fang.com");//接收者
+        msg.setSubject("邮箱发送测试");//标题
+        msg.setCc();
+        msg.setText("hello world  哈哈哈");//内容
         sender.send(msg);
     }
 
