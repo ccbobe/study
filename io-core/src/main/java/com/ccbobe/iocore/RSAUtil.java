@@ -6,6 +6,9 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 用法：公钥加密、私钥解密、私钥签名、公钥验签。
@@ -24,14 +27,14 @@ public class RSAUtil {
      *  4096位/8位-11 = 512-11=501  4096 位
      *
      */
-    private static final int MAX_ENCRYPT_BLOCK = 501;
+    private static final int MAX_ENCRYPT_BLOCK = 117;
 
     /**
      * RSA Maximum decrypted ciphertext size
      * 1024位/8位=128   1024
      * 4096位/8位=512   4096
      */
-    private static final int MAX_DECRYPT_BLOCK = 512;
+    private static final int MAX_DECRYPT_BLOCK = 128;
 
     /**
      * encryption
@@ -127,7 +130,8 @@ public class RSAUtil {
         PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(decodePrivateKey);
         KeyFactory keyFactory = KeyFactory.getInstance(KEY_ALGORITHM);
         PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
-        Signature signature = Signature.getInstance(SIGN_TYPE); //用md5生成内容摘要，再用RSA的私钥加密，进而生成数字签名
+        //生成内容摘要，再用RSA的私钥加密，进而生成数字签名
+        Signature signature = Signature.getInstance(SIGN_TYPE);
         signature.initSign(privateKey);
         signature.update(src.getBytes());
         // 生成签名
@@ -164,5 +168,23 @@ public class RSAUtil {
         byte[] decodeSign = java.util.Base64.getDecoder().decode(sign);
         // 验证签名
         return signature.verify(decodeSign);
+    }
+
+    /**
+     * 计算生成key
+     * @return
+     */
+    public static Map<String,String> keyGenerator() throws NoSuchAlgorithmException {
+        KeyPairGenerator keyGen = KeyPairGenerator.getInstance(KEY_ALGORITHM);
+        keyGen.initialize(1024);
+        KeyPair pair = keyGen.generateKeyPair();
+        byte[] publicBytes = pair.getPublic().getEncoded();
+        byte[] privateBytes = pair.getPrivate().getEncoded();
+        System.out.println("public key: " + Base64.getEncoder().encodeToString(publicBytes));
+        System.out.println("private key: " + Base64.getEncoder().encodeToString(privateBytes));
+        Map map = new HashMap(2);
+        map.put("publicKey",Base64.getEncoder().encodeToString(publicBytes));
+        map.put("privateKey",Base64.getEncoder().encodeToString(privateBytes));
+        return map;
     }
 }
